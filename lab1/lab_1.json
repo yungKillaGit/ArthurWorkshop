@@ -23,5 +23,10 @@
       "status": "Дискриминант отрицательный. Корней не существует"
     },
     "method": "GET"
+  },
+  {
+    "url": "http://localhost:3000/region/76",
+    "response": "Ярославская обл",
+    "method": "GET"
   }
 ]
