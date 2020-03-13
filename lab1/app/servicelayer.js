@@ -5,11 +5,13 @@ module.exports = (dir) => {
     const equationService = require(`${dir}/equationService`)();
     const regionService = require(`${dir}/regionService`)();
     const fibonacciNumberService = require(`${dir}/fibonacciNumberService`)();
+    const dateService = require(`${dir}/dateService`)();
     return {
         configService,
         logService,
         equationService,
         regionService,
         fibonacciNumberService,
+        dateService,
     };
 };
