@@ -33,5 +33,10 @@
     "url": "http://localhost:3000/fibonacci/6",
     "response": 8,
     "method": "GET"
+  },
+  {
+    "url": "http://localhost:3000/day?date=14.03.2020",
+    "response": "СБ",
+    "method": "GET"
   }
 ]
