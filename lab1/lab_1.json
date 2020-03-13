@@ -1,0 +1,27 @@
+[
+  {
+    "url": "http://localhost:3000/equation?a=1&b=4&c=-1",
+    "response":
+    {
+      "x1": 0.2360679774997898,
+      "x2": -4.23606797749979
+    },
+    "method": "GET"
+  },
+  {
+    "url": "http://localhost:3000/equation?a=5&b=0&c=0",
+    "response":
+    {
+      "x1": 0
+    },
+    "method": "GET"
+  },
+  {
+    "url": "http://localhost:3000/equation?a=4&b=0&c=36",
+    "response":
+    {
+      "status": "Дискриминант отрицательный. Корней не существует"
+    },
+    "method": "GET"
+  }
+]

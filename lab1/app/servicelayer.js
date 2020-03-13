@@ -1,9 +1,11 @@
 'use strict';
 module.exports = (dir) => {
-    const config = require(`${dir}/configService`)();
-    const log = require(`${dir}/logService`)(config);
+    const configService = require(`${dir}/configService`)();
+    const logService = require(`${dir}/logService`)(configService);
+    const equationService = require(`${dir}/equationService`)();
     return {
-        config,
-        log,
+        configService,
+        logService,
+        equationService,
     };
 };
