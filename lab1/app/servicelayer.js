@@ -6,6 +6,7 @@ module.exports = (dir) => {
     const regionService = require(`${dir}/regionService`)();
     const fibonacciNumberService = require(`${dir}/fibonacciNumberService`)();
     const dateService = require(`${dir}/dateService`)();
+    const numberConverterService = require(`${dir}/numberConverterService`)();
     return {
         configService,
         logService,
@@ -13,5 +14,6 @@ module.exports = (dir) => {
         regionService,
         fibonacciNumberService,
         dateService,
+        numberConverterService
     };
 };
