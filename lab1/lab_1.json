@@ -38,5 +38,10 @@
     "url": "http://localhost:3000/day?date=14.03.2020",
     "response": "СБ",
     "method": "GET"
+  },
+  {
+    "url": "http://localhost:3000/number/1337",
+    "response": "Одна тысяча триста тридцать семь",
+    "method": "GET"
   }
 ]
