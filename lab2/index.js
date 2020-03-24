@@ -1,18 +1,15 @@
-'use strict';
 const express = require('express');
 const bodyParser = require('body-parser');
-
-const router = require('./router')('./routes/');
 const config = require('./config')();
-const services = require('./serviceLayer')('./services/');
+const routes = require('./routes');
 
 const app = express();
-app.use(router);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(routes);
 
 const server = app.listen(config.port, () => {
-    services.logService.write('*********************************');
-    services.logService.write(`* App listening on port ${server.address().port}`);
-    services.logService.write('*********************************');
+  console.log('*********************************');
+  console.log(`* App listening on port ${server.address().port}`);
+  console.log('*********************************');
 });
