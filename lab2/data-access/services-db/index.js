@@ -4,6 +4,7 @@ const {
   addService,
   deleteService,
   updateService,
+  checkIfServicesExist,
 } = require('./mongod');
 
 const servicesDB = {
@@ -12,6 +13,7 @@ const servicesDB = {
   addService,
   deleteService,
   updateService,
+  checkIfServicesExist,
 };
 
 module.exports = servicesDB;

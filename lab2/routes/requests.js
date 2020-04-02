@@ -1,42 +1,69 @@
 const requestsDB = require('../data-access/requests-db');
 
+const errors = [404, 422];
+
 const requests = {
   index: (req, res) => {
     requestsDB
       .getRequests()
-      .then((data) => {
-        res.json(data);
+      .then((answer) => {
+        res.status(answer.status).json(answer.data);
+      })
+      .catch((error) => {
+        res.status(500).json({ error: error.message });
       });
   },
   show: (req, res) => {
     requestsDB
       .getRequest(req.params.id)
-      .then((data) => {
-        res.json(data);
+      .then((answer) => {
+        res.status(answer.status).json(answer.data);
+      })
+      .catch((error) => {
+        if (errors.includes(error.code)) {
+          res.status(error.code).json({ error: error.message });
+        }
+        res.status(500).json({ error: error.message });
       });
   },
   delete: (req, res) => {
     requestsDB
       .deleteRequest(req.params.id)
-      .then((data) => {
-        res.json(data);
+      .then((answer) => {
+        res.status(answer.status).json({ deletedID: answer.data });
+      })
+      .catch((error) => {
+        if (errors.includes(error.code)) {
+          res.status(error.code).json({ error: error.message });
+        }
+        res.status(500).json({ error: error.message });
       });
   },
-  create: (req, res, next) => {
+  create: (req, res) => {
     requestsDB
       .addRequest(req.body)
-      .then((data) => {
-        res.json(data);
+      .then((answer) => {
+        res.status(answer.status).json(answer.data);
       })
-      .catch(next);
+      .catch((error) => {
+        if (errors.includes(error.code)) {
+          res.status(error.code).json({ error: error.message });
+        }
+        res.status(500).json({ error: error.message });
+      });
   },
-  update: (req, res, next) => {
+  update: (req, res) => {
     requestsDB
       .updateRequest(req.params.id, req.body)
-      .then((data) => {
-        res.json(data);
+      .then((answer) => {
+        res.status(answer.status).json(answer.data);
       })
-      .catch(next);
+      .catch((error) => {
+        if (errors.includes(error.code)) {
+          res.status(error.code).json({ error: error.message });
+        }
+        res.status(500).json({ error: error.message });
+      });
   },
 };
 
