@@ -1,7 +1,9 @@
+const errorHandler = require('../../error-handler')();
+
 const buildMakeService = (serviceValidator) => ({ name, price, description } = {}) => {
   const error = serviceValidator({ name, price, description });
   if (error !== undefined) {
-    throw new Error(error);
+    return errorHandler.getValidationError(error);
   }
   return {
     getName: () => name,

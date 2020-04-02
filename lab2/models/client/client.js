@@ -1,3 +1,5 @@
+const errorHandler = require('../../error-handler')();
+
 const buildMakeClient = (clientValidator) => ({
   fullName, age, city, phoneNumber,
 } = {}) => {
@@ -5,7 +7,7 @@ const buildMakeClient = (clientValidator) => ({
     fullName, age, city, phoneNumber,
   });
   if (error !== undefined) {
-    throw new Error(error);
+    return errorHandler.getValidationError(error);
   }
   return {
     getFullName: () => fullName,

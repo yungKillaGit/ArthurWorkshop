@@ -1,30 +1,37 @@
 const Client = require('../../../db/mongodb/models/client');
 const makeClient = require('../../../models/client');
 const map = require('../../mapper')(require('./mapping'));
+const errorHandler = require('../../../error-handler')();
 
-const getClients = () => Client
+const getClients = async () => Client
   .find({})
-  .then(map)
-  .catch((error) => ({
-    status: 'fail',
-    error: error.message,
-  }));
+  .then((response) => ({ status: 200, data: map(response) }));
 
-const getClient = (property, value) => {
+const getClient = async (property, value) => {
   if (property === 'id') {
     property = '_id';
+    const validationResult = errorHandler.checkIfIdIsValid(value);
+    if (validationResult instanceof Error) {
+      throw validationResult;
+    }
   }
+  console.log(`client id in function getClient ${value}`);
   return Client
     .find({ [property]: value })
-    .then((response) => map(response[0]))
-    .catch((error) => ({
-      status: 'fail',
-      error: error.message,
-    }));
+    .then((response) => {
+      // Check if response is empty array.
+      if (!(Array.isArray(response) && response.length)) {
+        throw errorHandler.getNotFoundError('client not found');
+      }
+      return { status: 200, data: map(response[0]) };
+    });
 };
 
-const addClient = (clientInfo) => {
+const addClient = async (clientInfo) => {
   const client = makeClient(clientInfo);
+  if (client instanceof Error) {
+    throw client;
+  }
   const newClient = {
     fullName: client.getFullName(),
     age: client.getAge(),
@@ -33,42 +40,50 @@ const addClient = (clientInfo) => {
   };
   return Client
     .create(newClient)
-    .then(map)
-    .catch((error) => ({
-      status: 'fail',
-      error: error.message,
-    }));
+    .then((response) => ({ status: 201, data: map(response) }));
 };
 
-const deleteClient = (id) => Client
-  .findByIdAndDelete(id)
-  .then((response) => ({
-    id: response._id,
-    status: 'success',
-  }))
-  .catch((error) => ({
-    status: 'fail',
-    error: error.message,
-  }));
+const deleteClient = async (id) => {
+  const validationResult = errorHandler.checkIfIdIsValid(id);
+  if (validationResult instanceof Error) {
+    throw validationResult;
+  }
+  return Client
+    .findByIdAndDelete(id)
+    .then((response) => {
+      if (response === null) {
+        throw errorHandler.getNotFoundError('client not found');
+      }
+      return { status: 200, data: response._id };
+    });
+};
 
-const updateClient = (id, clientInfo) => Client
-  .findById(id)
-  .then((response) => {
-    const client = makeClient({ ...response._doc, ...clientInfo });
-    const newClient = {
-      fullName: client.getFullName(),
-      age: client.getAge(),
-      city: client.getCity(),
-      phoneNumber: client.getPhoneNumber(),
-    };
-    return Client
-      .findByIdAndUpdate(id, newClient, { new: true })
-      .then(map)
-      .catch((error) => ({
-        status: 'fail',
-        error: error.message,
-      }));
-  });
+const updateClient = async (id, clientInfo) => {
+  const validationResult = errorHandler.checkIfIdIsValid(id);
+  if (validationResult instanceof Error) {
+    throw validationResult;
+  }
+  return Client
+    .findById(id)
+    .then((response) => {
+      if (response === null) {
+        throw errorHandler.getNotFoundError('client not found');
+      }
+      const client = makeClient({ ...response._doc, ...clientInfo });
+      if (client instanceof Error) {
+        throw client;
+      }
+      const newClient = {
+        fullName: client.getFullName(),
+        age: client.getAge(),
+        city: client.getCity(),
+        phoneNumber: client.getPhoneNumber(),
+      };
+      return Client
+        .findByIdAndUpdate(id, newClient, { new: true })
+        .then((data) => ({ status: 200, data: map(data) }));
+    });
+};
 
 module.exports = {
   getClient,
