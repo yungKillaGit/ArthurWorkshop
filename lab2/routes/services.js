@@ -1,9 +1,6 @@
-const servicesDB = require('../data-access/services-db');
-const serviceSeeder = require('../db/mongodb/seeds/services');
-
 const errors = [404, 422];
 
-const services = {
+const services = ({ servicesDB, serviceSeeder }) => ({
   index: (req, res) => {
     servicesDB
       .getServices()
@@ -70,6 +67,6 @@ const services = {
     serviceSeeder.seed();
     res.status(200).json('successfully');
   },
-};
+});
 
 module.exports = services;

@@ -1,12 +1,9 @@
-const mongoose = require('../connection');
-
-const { Schema } = mongoose;
-const ServiceSchema = new Schema({
-  name: String,
-  price: Number,
-  description: String,
-});
-
-const Service = mongoose.model('Service', ServiceSchema);
-
-module.exports = Service;
+module.exports = ({ mongooseConnection }) => {
+  const { Schema } = mongooseConnection;
+  const ServiceSchema = new Schema({
+    name: String,
+    price: Number,
+    description: String,
+  });
+  return mongooseConnection.model('Service', ServiceSchema);
+};

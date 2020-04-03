@@ -1,9 +1,6 @@
-const clientsDB = require('../data-access/clients-db');
-const clientSeeder = require('../db/mongodb/seeds/clients');
-
 const errors = [404, 422];
 
-const clients = {
+const clients = ({ clientsDB, clientSeeder }) => ({
   index: (req, res) => {
     clientsDB
       .getClients()
@@ -70,6 +67,6 @@ const clients = {
     clientSeeder.seed();
     res.status(200).json('successfully');
   },
-};
+});
 
 module.exports = clients;
