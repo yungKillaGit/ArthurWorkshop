@@ -1,8 +1,7 @@
-const errorHandler = require('../../error-handler')();
-
-const buildMakeClient = (clientValidator) => ({
+module.exports = ({ validator, errorHandler }) => ({
   fullName, age, city, phoneNumber,
 } = {}) => {
+  const clientValidator = validator.makeClientValidator();
   const error = clientValidator({
     fullName, age, city, phoneNumber,
   });
@@ -16,5 +15,3 @@ const buildMakeClient = (clientValidator) => ({
     getPhoneNumber: () => phoneNumber,
   };
 };
-
-module.exports = buildMakeClient;

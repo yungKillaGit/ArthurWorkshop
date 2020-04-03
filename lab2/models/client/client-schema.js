@@ -1,6 +1,4 @@
-const Joi = require('@hapi/joi');
-
-module.exports = Joi.object().keys({
+module.exports = ({ Joi }) => Joi.object().keys({
   fullName: Joi.string().error(new Error('must have full name as string')),
   age: Joi.number().error(new Error('must have age as number')),
   city: Joi.string().error(new Error('must have city as string')),

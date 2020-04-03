@@ -1,8 +1,6 @@
-const requestsDB = require('../data-access/requests-db');
-
 const errors = [404, 422];
 
-const requests = {
+const requests = ({ requestsDB }) => ({
   index: (req, res) => {
     requestsDB
       .getRequests()
@@ -65,6 +63,6 @@ const requests = {
         res.status(500).json({ error: error.message });
       });
   },
-};
+});
 
 module.exports = requests;

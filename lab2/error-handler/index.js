@@ -1,26 +1,23 @@
-const { ObjectId } = require('mongoose').Types;
+const errorHandler = ({ mongoose }) => ({
+  getValidationError: (message) => {
+    const error = new Error(message);
+    error.code = 422;
+    return error;
+  },
 
-const getValidationError = (message) => {
-  const error = new Error(message);
-  error.code = 422;
-  return error;
-};
+  checkIfIdIsValid: (id) => {
+    const { ObjectId } = mongoose.Types;
+    if (!ObjectId.isValid(id)) {
+      return errorHandler({ mongoose }).getValidationError('invalid ID');
+    }
+    return true;
+  },
 
-const checkIfIdIsValid = (id) => {
-  if (!ObjectId.isValid(id)) {
-    return getValidationError('invalid ID');
-  }
-  return true;
-};
-
-const getNotFoundError = (message) => {
-  const error = new Error(message);
-  error.code = 404;
-  return error;
-};
-
-module.exports = () => ({
-  getValidationError,
-  getNotFoundError,
-  checkIfIdIsValid,
+  getNotFoundError: (message) => {
+    const error = new Error(message);
+    error.code = 404;
+    return error;
+  },
 });
+
+module.exports = errorHandler;
