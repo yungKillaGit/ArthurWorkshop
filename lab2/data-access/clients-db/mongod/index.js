@@ -48,7 +48,7 @@ const ClientsDB = ({
     return Client
       .findByIdAndDelete(id)
       .then((response) => {
-        if (response === null) {
+        if (!response) {
           throw errorHandler.getNotFoundError('client not found');
         }
         return { status: 200, data: response._id };
@@ -63,7 +63,7 @@ const ClientsDB = ({
     return Client
       .findById(id)
       .then((response) => {
-        if (response === null) {
+        if (!response) {
           throw errorHandler.getNotFoundError('client not found');
         }
         const client = makeClient({ ...response._doc, ...clientInfo });

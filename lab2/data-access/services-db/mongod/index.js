@@ -47,7 +47,7 @@ const ServicesDB = ({
     return Service
       .findByIdAndDelete(id)
       .then((response) => {
-        if (response === null) {
+        if (!response) {
           throw errorHandler.getNotFoundError('service not found');
         }
         return { status: 200, data: response._id };

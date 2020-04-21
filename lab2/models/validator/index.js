@@ -1,10 +1,7 @@
 const validator = ({ clientSchema, serviceSchema, requestSchema }) => ({
   makeValidator: (schema) => (payload) => {
     const { error } = schema.validate(payload);
-    if (error !== undefined) {
-      return error;
-    }
-    return undefined;
+    return error;
   },
   makeClientValidator: () => validator({ clientSchema, serviceSchema, requestSchema })
     .makeValidator(clientSchema),

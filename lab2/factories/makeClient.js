@@ -5,7 +5,7 @@ module.exports = ({ validator, errorHandler }) => ({
   const error = clientValidator({
     fullName, age, city, phoneNumber,
   });
-  if (error !== undefined) {
+  if (error) {
     return errorHandler.getValidationError(error);
   }
   return {

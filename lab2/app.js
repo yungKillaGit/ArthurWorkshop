@@ -5,7 +5,7 @@ const app = ({
     const server = express();
     server.use(bodyParser.urlencoded({ extended: true }));
     server.use(bodyParser.json());
-    server.use(router);
+    server.use(config.root, router);
 
     server.listen(config.port, () => {
       console.log('*********************************');

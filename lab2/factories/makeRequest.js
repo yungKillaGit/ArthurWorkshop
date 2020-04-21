@@ -1,7 +1,7 @@
 module.exports = ({ validator, errorHandler }) => ({ client, services } = {}) => {
   const requestValidator = validator.makeRequestValidator();
   const error = requestValidator({ client, services });
-  if (error !== undefined) {
+  if (error) {
     return errorHandler.getValidationError(error);
   }
   return {

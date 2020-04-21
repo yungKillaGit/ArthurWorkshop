@@ -15,7 +15,7 @@ const RequestsDB = ({
       .findById(id)
       .populate('client services')
       .then((response) => {
-        if (response === null) {
+        if (!response) {
           throw errorHandler.getNotFoundError('request not found');
         }
         return { status: 200, data: mapper.mapRequests(response) };
@@ -56,7 +56,7 @@ const RequestsDB = ({
     return Request
       .findByIdAndDelete(id)
       .then((response) => {
-        if (response === null) {
+        if (!response) {
           throw errorHandler.getNotFoundError('request not found');
         }
         return { status: 200, data: response._id };
@@ -71,7 +71,7 @@ const RequestsDB = ({
     return Request
       .findById(id)
       .then((response) => {
-        if (response === null) {
+        if (!response) {
           throw errorHandler.getNotFoundError('request not found');
         }
         const request = makeRequest({ ...response._doc, ...requestInfo });
