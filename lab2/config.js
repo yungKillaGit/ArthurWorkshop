@@ -1,4 +1,7 @@
 module.exports = () => ({
   port: 3000,
-  dbUri: 'mongodb://localhost:27017/lab2',
+  root: '/api',
+  dbHost: 'localhost',
+  dbPort: '27017',
+  dbName: 'lab2',
 });

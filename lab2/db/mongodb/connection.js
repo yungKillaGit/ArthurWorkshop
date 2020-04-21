@@ -1,7 +1,8 @@
 module.exports = ({ mongoose, config }) => {
+  const { dbHost, dbPort, dbName } = config;
   const mongooseConnection = mongoose;
   mongooseConnection.Promise = global.Promise;
-  mongooseConnection.connect(config.dbUri, {
+  mongooseConnection.connect(`mongodb://${dbHost}:${dbPort}/${dbName}`, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   });
