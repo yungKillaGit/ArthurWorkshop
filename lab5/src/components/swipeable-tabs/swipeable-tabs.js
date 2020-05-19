@@ -50,7 +50,6 @@ const SwipeableTabs = () => {
     await axios.get('http://localhost:4000/api/requests')
       .then((response) => {
         setRequests(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
