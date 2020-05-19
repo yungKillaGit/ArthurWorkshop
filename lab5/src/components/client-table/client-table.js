@@ -6,6 +6,7 @@ import { Alert } from '@material-ui/lab';
 const ClientTable = ({ clients }) => {
   const [state, setState] = useState({
     columns: [
+      { title: 'ID клиента', field: 'id', editable: 'never' },
       { title: 'Полное имя', field: 'fullName' },
       { title: 'Возраст', field: 'age' },
       { title: 'Город', field: 'city' },
@@ -16,14 +17,14 @@ const ClientTable = ({ clients }) => {
   const [alertMessage, setAlertMessage] = useState();
 
   const addClient = (data) => axios.post('http://localhost:4000/api/clients', data)
-    .then(() => true)
+    .then((response) => response.data)
     .catch((error) => {
       setAlertMessage(error.response.data.error);
       return false;
     });
 
   const updateClient = (data) => axios.put(`http://localhost:4000/api/clients/${data.id}`, data)
-    .then(() => true)
+    .then((response) => response.data)
     .catch((error) => {
       setAlertMessage(error.response.data.error);
       return false;
@@ -49,7 +50,7 @@ const ClientTable = ({ clients }) => {
             addClient(newData)
               .then((response) => {
                 if (response) {
-                  data.push(newData);
+                  data.push(response);
                 }
               })
               .then(() => setState({ ...state, data }));
@@ -61,7 +62,7 @@ const ClientTable = ({ clients }) => {
               updateClient(newData)
                 .then((response) => {
                   if (response) {
-                    data[data.indexOf(oldData)] = newData;
+                    data[data.indexOf(oldData)] = response;
                   }
                 })
                 .then(() => setState({ ...state, data }));

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import MaterialTable from 'material-table';
-import {Alert} from "@material-ui/lab";
+import { Alert } from '@material-ui/lab';
 
 const ServiceTable = ({ services }) => {
   const [state, setState] = useState({

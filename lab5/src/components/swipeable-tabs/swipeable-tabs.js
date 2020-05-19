@@ -47,6 +47,7 @@ const SwipeableTabs = () => {
   };
 
   const fetchAllRequests = async () => {
+    console.log('check');
     await axios.get('http://localhost:4000/api/requests')
       .then((response) => {
         setRequests(response.data);
@@ -100,7 +101,7 @@ const SwipeableTabs = () => {
               <ServiceTable services={services} />
             </TabPanel>
             <TabPanel value={value} index={2} dir={theme.direction}>
-              <RequestTable requests={requests} />
+              <RequestTable requests={requests} fetchRequests={fetchAllRequests} />
             </TabPanel>
           </SwipeableViews>
         )
