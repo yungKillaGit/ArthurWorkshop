@@ -6,6 +6,7 @@ module.exports = (container, asValue) => ({
       bodyParser: asValue(require('body-parser')),
       Joi: asValue(require('@hapi/joi')),
       joiObjectId: asValue(require('joi-objectid')),
+      cors: asValue(require('cors')),
     });
   },
 });
