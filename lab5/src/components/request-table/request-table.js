@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import MaterialTable from 'material-table';
 import { Alert } from '@material-ui/lab';
+import { TextField } from '@material-ui/core';
 import RequestTooltip from '../request-tooltip/request-tooltip';
-import { TextField } from "@material-ui/core";
 
 const formatRequest = (request) => ({
   clientId: request.client.id,
@@ -13,8 +13,8 @@ const formatRequest = (request) => ({
   services: request.services,
 });
 
-const RequestTable = ({ requests, fetchRequests }) => {
-  const formattedRequests = requests.map((request) => formatRequest(request));
+const RequestTable = ({ requests }) => {
+  const formattedRequests = requests && requests.map((request) => formatRequest(request));
   const [state, setState] = useState({
     columns: [
       { title: 'ID заявки', field: 'requestId', editable: 'never' },
@@ -114,4 +114,4 @@ const RequestTable = ({ requests, fetchRequests }) => {
   );
 };
 
-export default RequestTable;
+export default React.memo(RequestTable);
